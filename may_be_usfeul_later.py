@@ -46,3 +46,19 @@ def make_undirected_graph(n, pr):
             egdes_reverse(G, a, b, c)
             current_edges += 3-s
     return G
+
+def make_undirected_graph(n, pr, t):
+    G = nx.fast_gnp_random_graph(n, pr)
+    while not nx.is_connected(G):
+        G = nx.fast_gnp_random_graph(n, pr)
+    if t == "matrix":
+        G2 = MatrixGraph(n)
+        for e in G.edges():
+            G2.add_edge(*e, weight=randint(1, 1001))
+    elif t == "list":
+        G2 = ListGraph(n)
+        for e in G.edges():
+            G2.add_edge(*e, weight=randint(1, 1001))
+    else:
+        raise RuntimeError(f"Unknown graph type: {t}")
+    return G2
