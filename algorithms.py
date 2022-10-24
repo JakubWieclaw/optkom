@@ -26,6 +26,7 @@ def greedy_graph_coloring(graph : Graph, use_builtin_algorithm=False) -> dict:
             coloring[node] = min(possible_colors_to_use) # color the node with the 'lowest' possible color (number)
         return coloring
     else: # use builtin algorithm
+        print("Using builtin algorithm")
         return nx.greedy_color(graph, strategy="smallest_last")
 
 def execute_and_measure_time(func, avg_by : int, *args, **kwargs):
