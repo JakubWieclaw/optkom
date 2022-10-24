@@ -1,5 +1,6 @@
 from Graph import Graph
 import networkx as nx
+from time import time
 
 def sort_nodes_by_reduction(graph : Graph) -> list:
     """Sorts nodes by reduction. The node removed as first (the least degree) is last in the list"""
@@ -26,3 +27,15 @@ def greedy_graph_coloring(graph : Graph, use_builtin_algorithm=False) -> dict:
         return coloring
     else: # use builtin algorithm
         return nx.greedy_color(graph, strategy="smallest_last")
+
+def execute_and_measure_time(func, avg_by : int, *args, **kwargs):
+    """Executes function and measures time. Return object returned by func"""
+    avg = 0
+    for i in range(avg_by):
+        start = time()
+        ret = func(*args, **kwargs)
+        end = time()
+        avg += (end - start)
+    avg /= avg_by
+    print("Time: ", avg)
+    return ret
