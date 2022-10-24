@@ -1,5 +1,7 @@
+import random
 import networkx as nx
 import matplotlib.pyplot as plt
+from matplotlib import colors as mcolors
 
 # Just a wrapper for networkx.Graph
 # Maybe to be extended later
@@ -17,10 +19,10 @@ class Graph(nx.Graph):
             for line in file:
                 line = line.split()
                 line = [int(node) for node in line]
-                if not nodes_counting_from_zero: # in this program nodes NEED TO be counted from zero
-                    line[0] -= 1
-                    line[1] -= 1
                 if len(line) == 2:
+                    if not nodes_counting_from_zero: # in this program nodes NEED TO be counted from zero
+                        line[0] -= 1
+                        line[1] -= 1
                     self.add_edges_from([tuple(line)])
 
     def generate_random_simple_graph(self, nodes : int, probability_of_edge_creation : float) -> None:
@@ -33,12 +35,16 @@ class Graph(nx.Graph):
     def draw(self, colors={}, *args, **kwargs) -> None:
         """Drawing the graph with matplotlib"""
         # TODO: repair node coloring
-        # if colors:
-        #     colors_list = [item[1] for item in sorted(colors.items(), key=lambda item: item[0])]
-        #     print(colors_list)
-        #     nx.draw_networkx(self, node_color=colors_list, *args, **kwargs)
-        # else:
-        nx.draw_networkx(self, *args, **kwargs)
+        if colors:
+            # colors_list = [item[1] for item in sorted(colors.items(), key=lambda item: item[0])]
+            # mcolors_list = list(mcolors.CSS4_COLORS.keys())
+            # random.shuffle(mcolors_list)
+            # colors_names = [mcolors_list[idx] for idx in colors_list]
+            # print(colors_names)
+            nx.draw_networkx(self, labels=colors, *args, **kwargs)
+            # nx.draw_networkx(self, node_color=colors_names, *args, **kwargs)
+        else:
+            nx.draw_networkx(self, *args, **kwargs)
         plt.show()
 
     def save_to_txt_file(self, filename : str):

@@ -32,6 +32,7 @@ def greedy_graph_coloring(graph : Graph, use_builtin_algorithm=False) -> dict:
 def execute_and_measure_time(func, avg_by : int, *args, **kwargs):
     """Executes function and measures time. Return object returned by func"""
     avg = 0
+    ret = None
     for i in range(avg_by):
         start = time()
         ret = func(*args, **kwargs)
