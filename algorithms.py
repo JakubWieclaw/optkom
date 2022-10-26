@@ -2,7 +2,7 @@ from Graph import Graph
 import networkx as nx
 from time import time
 
-def sort_nodes_by_reduction(graph : Graph) -> list:
+def sort_nodes_by_reduction(graph : Graph) -> list: # TODO: it can be optimized i think
     """Sorts nodes by reduction. The node removed as first (the least degree) is last in the list"""
     sorted_nodes = list()
     graph_copy = graph.copy()
