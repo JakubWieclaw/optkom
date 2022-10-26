@@ -8,13 +8,14 @@ def sort_nodes_by_reduction(graph : Graph, use_builtin_algorithm=False) -> list:
         sorted_nodes = list()
         graph_copy = graph.copy()
         while (graph_copy.number_of_nodes() > 0):
-            tmp_max_node = min(graph_copy.nodes, key=lambda node: graph_copy.degree[node])
-            sorted_nodes.append(tmp_max_node)
-            graph_copy.remove_node(tmp_max_node)
+            tmp_min_node = min(graph_copy.nodes, key=lambda node: graph_copy.degree[node])
+            sorted_nodes.append(tmp_min_node)
+            graph_copy.remove_node(tmp_min_node)
         sorted_nodes.reverse()
         return sorted_nodes
     else:
-        return nx.algorithms.coloring.strategy_smallest_last(graph, None)
+        print("Using builtin algorithm for sorting nodes")
+        return nx.coloring.strategy_largest_first(graph)
 
 def greedy_graph_coloring(graph : Graph, use_builtin_algorithm=False) -> dict:
     """Greedy graph coloring SL algorithm"""
@@ -35,6 +36,7 @@ def greedy_graph_coloring(graph : Graph, use_builtin_algorithm=False) -> dict:
 def execute_and_measure_time(func, avg_by : int, *args, **kwargs):
     """Executes function and measures time. Return object returned by func"""
     avg = 0
+    ret = None
     for i in range(avg_by):
         start = time()
         ret = func(*args, **kwargs)
