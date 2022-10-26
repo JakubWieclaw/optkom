@@ -2,7 +2,7 @@ from Graph import Graph
 import networkx as nx
 from time import time
 
-def sort_nodes_by_reduction(graph : Graph) -> list:
+def sort_nodes_by_reduction(graph : Graph) -> list: # TODO: this sorting may cause that it won't be SL algorithm
     """Sorts nodes by reduction. The node removed as first (the least degree) is last in the list"""
     sorted_nodes = list()
     graph_copy = graph.copy()
@@ -10,7 +10,7 @@ def sort_nodes_by_reduction(graph : Graph) -> list:
         tmp_max_node = min(graph_copy.nodes, key=lambda node: graph_copy.degree[node])
         sorted_nodes.append(tmp_max_node)
         graph_copy.remove_node(tmp_max_node)
-    sorted_nodes.reverse()
+    sorted_nodes.reverse() # TODO: check if correct (maybe it should be removed; use dqueue?)
     return sorted_nodes
 
 def greedy_graph_coloring(graph : Graph, use_builtin_algorithm=False) -> dict:
