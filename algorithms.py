@@ -15,7 +15,7 @@ def sort_nodes_by_reduction(graph : Graph, use_builtin_algorithm=False) -> list:
         return sorted_nodes
     else:
         print("Using builtin algorithm for sorting nodes")
-        return nx.coloring.strategy_largest_first(graph)
+        return nx.coloring.strategy_largest_first(graph) # results are different than implemented above algorithm
 
 def greedy_graph_coloring(graph : Graph, use_builtin_algorithm=False) -> dict:
     """Greedy graph coloring SL algorithm"""
