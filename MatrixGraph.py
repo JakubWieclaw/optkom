@@ -1,9 +1,25 @@
 class MatrixGraph():
-    def __init__(self, n, directed=False):
-        self.n_and_e = [[0]*n for _ in range(n)]
+    """
+    ignoring n if filename is given
+    """
+    def __init__(self, n, filename=None, vertices_from_zero_in_file=False, directed=False):
         self.directed = directed
         self.edge_count = 0
-        self.size = n
+
+        if filename:
+            with open(filename, "r") as f:
+                self.size = int(next(f))
+                self.n_and_e = [[0]*self.size for _ in range(self.size)]
+                for line in f:
+                    line = line.split()
+                    if len(line) == 2:
+                        if vertices_from_zero_in_file:
+                            self.add_edge(int(line[0]), int(line[1]))
+                        else:
+                            self.add_edge(int(line[0])-1, int(line[1])-1)
+        else:
+            self.n_and_e = [[0]*n for _ in range(n)]
+            self.size = n
 
     def nodes(self):
         return range(self.size)
@@ -15,6 +31,7 @@ class MatrixGraph():
             self.edge_count += 1
             self.n_and_e[v][w] = weight
         else:
+            print("Adding edge", v, w)
             self.n_and_e[v][w] = weight
             self.n_and_e[w][v] = weight
             self.edge_count += 1
