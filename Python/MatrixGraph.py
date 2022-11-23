@@ -84,3 +84,6 @@ class MatrixGraph():
             self.n_and_e[node][i] = 0
             self.n_and_e[i][node] = 0
         # self.size -= 1
+
+    def is_edge(self, v, w):
+        return self.n_and_e[v][w] == 1
