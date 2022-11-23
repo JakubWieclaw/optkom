@@ -8,7 +8,7 @@
 class MatrixGraph
 {
 public:
-    void initialize(unsigned int n)
+    void graph_initialize(unsigned int n)
     {
         v = std::vector<std::vector<int>>(n, std::vector<int> (n, 0));
         size = n;
@@ -53,31 +53,16 @@ public:
     }
     void get_graph_from_instance_file(char* file_name)
     {
-        FILE * f = freopen(file_name, "r", stdin);
-        FILE * f_temp = freopen("temp_file.txt", "w", stdout);
-        std:: cin >> size;
-        initialize(size);
+        std::fstream my_cin(file_name);
+        my_cin >> size;
+        graph_initialize(size);
 
-        std::string line;
-        unsigned int lines = 0;
-        while (std::getline(std::cin, line))
+        int what_to_read = 0;
+        unsigned int x, y;
+        while ( (my_cin >> x) && (my_cin >> y) )
         {
-            if (lines) // From 1 cuz for some reason 1st line in temp file is newline
-            {
-                std::cout << line << std::endl;
-            }
-            lines++;
+            add_edge(--x, --y); // Not indexed from 0
         }
-        fclose(f);
-        fclose(f_temp);
-        FILE * f_temp_read = freopen("temp_file.txt", "r", stdin);
-        for (int i = 0; i < lines; i++) 
-        {
-            unsigned int x, y;
-            std::cin >> x >> y;
-            add_edge(--x,--y); // Not indexed from 0
-        }
-        fclose(f_temp_read);
     }
     void print_graph_to_file()
     {
@@ -102,7 +87,7 @@ private:
 int main()
 {
     MatrixGraph G;
-    // G.initialize(20);
+    // G.graph_initialize(20);
     // G.add_edge(0,1);
     G.get_graph_from_instance_file("mycie14.txt");
     G.print_graph_to_file();
