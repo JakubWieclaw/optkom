@@ -1,4 +1,4 @@
-// #pragma once
+#pragma once
 
 #include <iostream>
 #include <vector>
@@ -51,7 +51,7 @@ public:
     {
         return size;
     }
-    void get_graph_from_instance_file(std::string file_name)
+    void get_graph_from_instance_file(char* file_name)
     {
         std::fstream my_cin(file_name);
         my_cin >> size;
@@ -87,8 +87,6 @@ private:
 int main()
 {
     MatrixGraph G;
-    // G.graph_initialize(20);
-    // G.add_edge(0,1);
     G.get_graph_from_instance_file("mycie14.txt");
     G.print_graph_to_file();
     return 0;
