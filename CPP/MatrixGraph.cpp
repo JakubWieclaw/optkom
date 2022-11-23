@@ -57,6 +57,7 @@ public:
         std::string line;
         getline(f, line);
         size = stoi(line);
+        initialize(size);
 
         while (getline(f, line))
         {
@@ -76,7 +77,7 @@ public:
             }
             unsigned int x = stoi(x_line);
             unsigned int y = stoi(y_line);
-            add_edge(x,y);
+            add_edge(--x,--y); //Not indexed from 0
         }
 
     }
@@ -103,8 +104,9 @@ private:
 int main()
 {
     MatrixGraph G;
-    G.initialize(20);
-    G.add_edge(0,1);
+    // G.initialize(20);
+    // G.add_edge(0,1);
+    G.get_graph_from_instance_file("mycie14.txt");
     G.print_graph_to_file();
     return 0;
 }
