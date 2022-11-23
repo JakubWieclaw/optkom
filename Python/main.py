@@ -15,5 +15,12 @@
 # g.draw(colors=colors)
 
 from MatrixGraph import MatrixGraph
+from algorithms import greedy_graph_coloring
 
-graph = MatrixGraph(0, "test_instance.txt")
+graph = MatrixGraph(0, "CPP/mycie14.txt")
+size_of_tabu_list = 7
+number_of_neighbours = 10
+number_of_iterations = 1000
+
+print(greedy_graph_coloring(graph))
+print(graph)

@@ -1,4 +1,4 @@
-#pragma once
+// #pragma once
 
 #include <iostream>
 #include <vector>
@@ -51,7 +51,7 @@ public:
     {
         return size;
     }
-    void get_graph_from_instance_file(char* file_name)
+    void get_graph_from_instance_file(std::string file_name)
     {
         std::fstream my_cin(file_name);
         my_cin >> size;
