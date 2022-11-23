@@ -53,33 +53,31 @@ public:
     }
     void get_graph_from_instance_file(char* file_name)
     {
-        std::ifstream f(file_name);
-        std::string line;
-        getline(f, line);
-        size = stoi(line);
+        FILE * f = freopen(file_name, "r", stdin);
+        FILE * f_temp = freopen("temp_file.txt", "w", stdout);
+        std:: cin >> size;
         initialize(size);
 
-        while (getline(f, line))
+        std::string line;
+        unsigned int lines = 0;
+        while (std::getline(std::cin, line))
         {
-            int i = 0;
-            std::string x_line;
-            while(!isspace(line[i]))
+            if (lines) // From 1 cuz for some reason 1st line in temp file is newline
             {
-                x_line.push_back(line[i]);
-                i++;
+                std::cout << line << std::endl;
             }
-            i++;
-            std::string y_line;
-            while (i < line.length())
-            {
-                y_line.push_back(line[i]);
-                i++;
-            }
-            unsigned int x = stoi(x_line);
-            unsigned int y = stoi(y_line);
-            add_edge(--x,--y); //Not indexed from 0
+            lines++;
         }
-
+        fclose(f);
+        fclose(f_temp);
+        FILE * f_temp_read = freopen("temp_file.txt", "r", stdin);
+        for (int i = 0; i < lines; i++) 
+        {
+            unsigned int x, y;
+            std::cin >> x >> y;
+            add_edge(--x,--y); // Not indexed from 0
+        }
+        fclose(f_temp_read);
     }
     void print_graph_to_file()
     {
