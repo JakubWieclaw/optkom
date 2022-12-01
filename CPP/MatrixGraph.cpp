@@ -2,90 +2,74 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <stdexcept>
+#include <cassert>
+#include "MatrixGraph.h"
 
-class MatrixGraph
-{
-public:
-    void graph_initialize(unsigned int n)
-    {
-        v = std::vector<std::vector<int>>(n, std::vector<int> (n, 0));
-        size = n;
-    }
-    void add_edge(unsigned int row, unsigned int col)
-    {
-        if (row == col)
-        {
-            std::cout << "Row == Col - you probably don't wanna do that" << std::endl;
-            return;
-        }
-        if (v[row][col] != 0)
-        {
-            std::cout << "Edge already Exists";
-            return;
-        }
-        v[row][col] = 1;
-        v[col][row] = 1;
-        edge_count++;
-    }
-    std::vector<int> get_neighbours(unsigned int node)
-    {
-        std::vector<int> res;
-        if (node > size)
-        {
-            std::cout << "This node does not exist" << std::endl;
-            return res;
-        }
+using namespace std;
 
-        for (int i = 0; i < size; i++)
-        {
-            if (v[node][i])
-            {
-                res.push_back(i);
-            }
-        }
-        return res;
-    }
-    unsigned int get_size()
-    {
-        return size;
-    }
-    void get_graph_from_instance_file(char* file_name)
-    {
-        std::fstream my_cin(file_name);
-        my_cin >> size;
-        graph_initialize(size);
+MatrixGraph::MatrixGraph(unsigned int n) : v(n, vector<int>(n, 0)) {}
 
-        int what_to_read = 0;
-        unsigned int x, y;
-        while ( (my_cin >> x) && (my_cin >> y) )
+void MatrixGraph::add_edge(unsigned int row, unsigned int col){
+    assert(("Row == Col - you probably don't wanna do that", row != col));
+    assert(("Row or Col out of bounds", row < v.size() && col < v.size()));
+    assert(("Edge already exists", !v[row][col]));
+
+    v[row][col] = 1;
+    v[col][row] = 1;
+    edge_count++;
+}
+
+vector<int> MatrixGraph::get_neighbours(unsigned int node){
+    assert(("Node out of bounds", node < v.size()));
+    vector<int> res;
+
+    for (int i = 0; i < v.size(); i++)
+    {
+        if (v[node][i])
         {
-            add_edge(--x, --y); // Not indexed from 0
+            res.push_back(i);
         }
     }
-    void print_graph_to_file()
+    return res;
+}
+
+unsigned int MatrixGraph::get_size(){
+    return v.size();
+}
+
+MatrixGraph MatrixGraph::get_graph_from_instance_file(const string &file_name, bool indexed_from_zero){
+    ifstream file(file_name);
+    int size;
+    file >> size;
+    MatrixGraph g(size);
+
+    unsigned int x, y;
+    if (indexed_from_zero)
     {
-        FILE * f = freopen("cpp_graph.txt", "w", stdout);
-        for (int i = 0; i< size; i++)
+        while (file >> x >> y)
         {
-            for (int j = 0; j< size; j++)
-            {
-                std::cout << v[i][j] << " ";
-            }
-            std::cout << std::endl;
+            g.add_edge(x, y);
         }
-        fclose(f);
     }
+    else
+    {
+        while (file >> x >> y)
+        {
+            g.add_edge(x - 1, y - 1);
+        }
+    }
+    return g;
+}
 
-private:
-    std::vector<std::vector<int>> v;
-    unsigned int edge_count = 0;
-    unsigned int size = 0;
-};
-
-int main()
-{
-    MatrixGraph G;
-    G.get_graph_from_instance_file("mycie14.txt");
-    G.print_graph_to_file();
-    return 0;
+void MatrixGraph::print_graph_to_file(const string file_name){
+    ofstream file(file_name);
+    for (int i = 0; i < get_size(); i++)
+    {
+        for (int j = 0; j < get_size(); j++)
+        {
+            file << v[i][j] << " ";
+        }
+        file << "\n";
+    }
 }
