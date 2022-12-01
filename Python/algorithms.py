@@ -14,10 +14,6 @@ def sort_nodes_by_reduction(graph : MatrixGraph) -> list:
         graph_copy.remove_node(tmp_min_node)
     sorted_nodes.reverse()
     return sorted_nodes
-#     else:
-#         print("Using builtin algorithm for sorting nodes")
-#         return nx.coloring.strategy_largest_first(graph) # results are different than implemented above algorithm
-
 def greedy_graph_coloring(graph : MatrixGraph) -> list:
     """Greedy graph coloring SL algorithm"""
     colors = set(range(0, graph.number_of_nodes())) # colors are just numbers, generated from 0 to number of nodes-1 (maximal number of colors)
@@ -35,19 +31,3 @@ def greedy_graph_coloring(graph : MatrixGraph) -> list:
     for node, color in coloring.items():
         coloring_list[color].append(node)
     return coloring_list
-#     else: # use builtin algorithm
-#         print("Using builtin algorithm")
-#         return nx.greedy_color(graph, strategy="smallest_last")
-
-# def execute_and_measure_time(func, avg_by : int, *args, **kwargs):
-#     """Executes function and measures time. Return object returned by func"""
-#     avg = 0
-#     ret = None
-#     for i in range(avg_by):
-#         start = time()
-#         ret = func(*args, **kwargs)
-#         end = time()
-#         avg += (end - start)
-#     avg /= avg_by
-#     print("Time: ", avg)
-#     return ret

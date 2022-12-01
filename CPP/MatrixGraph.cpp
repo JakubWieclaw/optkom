@@ -2,7 +2,6 @@
 #include <vector>
 #include <string>
 #include <fstream>
-#include <stdexcept>
 #include <cassert>
 #include "MatrixGraph.h"
 
