@@ -28,6 +28,7 @@ def tabu_search(graph, k, s, size_of_tabu_list=7, number_of_neighbours=10, max_n
             neighbours.append(deepcopy(s))
 
         # TODO: check if there are empty lists in neighbour (didn't use color)
+        # TODO: vertex should be drawn from those that are in conflict
         for neighbour in neighbours:
             moves = []
             while True:
