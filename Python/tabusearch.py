@@ -31,6 +31,7 @@ def tabu_search(graph, k, s, size_of_tabu_list=7, number_of_neighbours=10, max_n
         for neighbour in neighbours:
             moves = []
             while True:
+                #Dunno but I think there are better ways to choose radnom integer
                 idxs_k_to_choose = [i for i in range(k)]
                 while True:
                     idx_k_from = random.choice(idxs_k_to_choose)
@@ -59,10 +60,12 @@ def tabu_search(graph, k, s, size_of_tabu_list=7, number_of_neighbours=10, max_n
                     minIdx = i
                     minF = f(graph, neighbours[i])
                     break
+                #this break makes for loop useless
             s = neighbours[minIdx]
             T.append(moves[minIdx]) # TODO: list index out of range - once error appeared
 
         number_of_iterations += 1
+        #iteration count was increased at the beginning - should it be increased here too?
 
     if f(graph, s) == 0:
         return s
