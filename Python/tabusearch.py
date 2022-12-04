@@ -3,6 +3,8 @@ import random
 from copy import deepcopy
 
 def f(graph, solution):
+    # conflicts are counted twice
+    # does it matter?
     res = 0
     for l in solution:
         for v in l:

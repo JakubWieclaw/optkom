@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
             {
                 std::cout << v << " ";
             }
-        std::cout << std::endl; 
+        std::cout << std::endl;
         }
     }
     else
