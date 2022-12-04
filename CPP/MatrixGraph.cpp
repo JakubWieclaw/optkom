@@ -72,3 +72,15 @@ void MatrixGraph::print_graph_to_file(const string file_name){
         file << "\n";
     }
 }
+
+bool MatrixGraph::edge_exists(unsigned int row, unsigned int col) const
+{
+    if (v[row][col])
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
