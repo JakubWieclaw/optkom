@@ -29,29 +29,29 @@ def tabu_search(graph, k, s, size_of_tabu_list=7, number_of_neighbours=10, max_n
 
         # TODO: check if there are empty lists in neighbour (didn't use color)
         # TODO: vertex should be drawn from those that are in conflict
+        moves = [] # list of tuples (vertex, color)
         for neighbour in neighbours:
-            moves = []
+            # while True:
+            #Dunno but I think there are better ways to choose radnom integer
+            idxs_k_to_choose = [i for i in range(k)]
             while True:
-                #Dunno but I think there are better ways to choose radnom integer
-                idxs_k_to_choose = [i for i in range(k)]
-                while True:
-                    idx_k_from = random.choice(idxs_k_to_choose)
-                    if len(neighbour[idx_k_from]) > 0:
-                        break
-                idxs_k_to_choose.remove(idx_k_from)
-                idx_k_to = random.choice(idxs_k_to_choose)
-                random_vertex = random.choice(neighbour[idx_k_from])
-
-                neighbour[idx_k_from].remove(random_vertex)
-                neighbour[idx_k_to].append(random_vertex)
-
-                moves.append((random_vertex, idx_k_from))
-
-                if f(graph, neighbour) < f(graph, s):
-                    s = neighbour
-                    T.append(moves[-1])
-                    bestFound = True
+                idx_k_from = random.choice(idxs_k_to_choose)
+                if len(neighbour[idx_k_from]) > 0:
                     break
+            idxs_k_to_choose.remove(idx_k_from)
+            idx_k_to = random.choice(idxs_k_to_choose)
+            random_vertex = random.choice(neighbour[idx_k_from])
+
+            neighbour[idx_k_from].remove(random_vertex)
+            neighbour[idx_k_to].append(random_vertex)
+
+            moves.append((random_vertex, idx_k_from))
+
+            if f(graph, neighbour) < f(graph, s):
+                s = neighbour
+                T.append(moves[-1])
+                bestFound = True
+                break
 
         if not bestFound:
             minF = float('inf')
@@ -60,12 +60,13 @@ def tabu_search(graph, k, s, size_of_tabu_list=7, number_of_neighbours=10, max_n
                 if f(graph, neighbours[i]) < minF:
                     minIdx = i
                     minF = f(graph, neighbours[i])
-                    break
+                    # break
                 #this break makes for loop useless
             s = neighbours[minIdx]
-            T.append(moves[minIdx]) # TODO: list index out of range - once error appeared
+            T.append(moves[minIdx]) # TODO: list index out of range - once error appeared -> FIXED?
 
-        number_of_iterations += 1
+        moves.clear()
+
         #iteration count was increased at the beginning - should it be increased here too?
 
     if f(graph, s) == 0:

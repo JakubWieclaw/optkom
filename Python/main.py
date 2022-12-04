@@ -12,12 +12,14 @@ def random_coloring(graph, k):
         coloring[random.randint(0, k-1)].append(node)
     return coloring
 
-# graph = MatrixGraph(0, "CPP/mycie14.txt")
-graph = MatrixGraph(0, "test_instance.txt")
+graph = MatrixGraph(0, "CPP/mycie14.txt")
+# graph = MatrixGraph(0, "test_instance.txt")
 s = greedy_graph_coloring(graph)
 k = len(s)
 
-print(random_coloring(graph, k))
 print(graph)
+rc = random_coloring(graph, k)
+print(rc)
 
-print(tabu_search(graph, k, random_coloring(graph, k), size_of_tabu_list=7, number_of_neighbours=1000, max_number_of_iterations=10000))
+for i in range(1000):
+    print(tabu_search(graph, k, rc, size_of_tabu_list=7, number_of_neighbours=500, max_number_of_iterations=50000))
