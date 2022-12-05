@@ -18,14 +18,20 @@ std::vector<std::vector<int>> propose_solution(MatrixGraph G, int k)
 
 int main(int argc, char* argv[])
 {
-    MatrixGraph G = MatrixGraph::get_graph_from_instance_file("mycie14.txt", false);
-    G.print_graph_to_file();
     int k = 5;
     if (argc > 1)
     {
         k = std::atoi(argv[1]);
     }
-    auto r = tabu_search(G, k, propose_solution(G, k), 7, 50, 50000);
+    std::string file_path = "mycie14.txt";
+    if (argc == 3)
+    {
+        file_path = argv[2];
+    }
+    MatrixGraph G = MatrixGraph::get_graph_from_instance_file(file_path, false);
+    G.print_graph_to_file();
+    
+    auto r = tabu_search(G, k, propose_solution(G, k), 7, 50, 20000);
     if (!r.empty())
     {
         for (int i = 0; i < r.size(); i++)
