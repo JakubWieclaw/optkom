@@ -39,7 +39,8 @@ class MatrixGraph():
 
     def add_edge(self, v, w, weight=1):
         if self.n_and_e[v][w] != 0:
-            raise RuntimeError("Added already existing edge")  # Just in case
+            print (f"Edge already exists {v} {w}")
+            # raise RuntimeError("Added already existing edge")  # Just in case
         self.nodes_set.add(v)
         self.nodes_set.add(w)
         if self.directed:
