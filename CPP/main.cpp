@@ -31,22 +31,42 @@ int main(int argc, char* argv[])
     MatrixGraph G = MatrixGraph::get_graph_from_instance_file(file_path, false);
     G.print_graph_to_file();
     
-    auto r = tabu_search(G, k, propose_solution(G, k), 7, 50, 20000);
-    if (!r.empty())
+    int best_solution_size = G.get_size();
+    std::vector<std::vector<int>> r;
+    std::vector<std::vector<int>> sol;
+    for (int i = G.get_size() - 1; i >=k; i--)
     {
-        for (int i = 0; i < r.size(); i++)
+        std::cout << i << std::endl;
+        r = tabu_search(G, i, propose_solution(G, i), 7, 50, 20000);
+        if (!r.empty())
         {
-            std::cout << i << ": ";
-            for (auto v: r.at(i))
-            {
-                std::cout << v << " ";
-            }
-        std::cout << std::endl;
+            best_solution_size = r.size();
+            sol = r;
+        }
+        else
+        {
+            break;
         }
     }
-    else
+    
+    // if (!sol.empty())
+    // {
+    
+    for (int i = 0; i < sol.size(); i++)
     {
-        std::cout << "No solution found" << std::endl;
+        std::cout << i << ": ";
+        for (auto v: sol.at(i))
+        {
+            std::cout << v << " ";
+        }
+    std::cout << std::endl;
     }
+    std::cout << "Best solution found for k = " << best_solution_size << std::endl;
+    
+    // }
+    // else
+    // {
+    //     std::cout << "No solution found" << std::endl;
+    // }
     return 0;
 }

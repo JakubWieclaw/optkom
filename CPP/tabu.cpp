@@ -54,10 +54,10 @@ std::vector<std::vector<int>> tabu_search(MatrixGraph G, int k_number_of_colours
         
 
         std::vector<std::vector<int>> best_proposed_solution;
-        int best_conflicts = 0;
+        int best_conflicts_count;
         std::pair<int, int> move{0, 0};
         bool is_any_solution_found = false;
-        bool in_tabu = false;
+        bool in_tabu;
         int vertex, colour;
         Conflict conflict;
         for (int i = 0; i < number_of_neighbours; i++)
@@ -65,6 +65,7 @@ std::vector<std::vector<int>> tabu_search(MatrixGraph G, int k_number_of_colours
             // Choose random conflict
             do
             {
+                in_tabu = false;
                 std::uniform_int_distribution<> distr(0, conflitcs.size() - 1);
                 int id = distr(gen);
                 conflict = conflitcs[id];
@@ -112,14 +113,14 @@ std::vector<std::vector<int>> tabu_search(MatrixGraph G, int k_number_of_colours
             if (!is_any_solution_found)
             {
                 best_proposed_solution = proposed_solution;
-                best_conflicts = proposed_solution_conflicts.size();
+                best_conflicts_count = proposed_solution_conflicts.size();
                 move = {vertex, conflict.colour};
                 is_any_solution_found = true;
             }
-            else if (proposed_solution_conflicts.size() < best_conflicts)
+            else if (proposed_solution_conflicts.size() < best_conflicts_count)
             {
                 best_proposed_solution = proposed_solution;
-                best_conflicts = proposed_solution_conflicts.size();
+                best_conflicts_count = proposed_solution_conflicts.size();
                 move = {vertex, conflict.colour};
             }
         }
