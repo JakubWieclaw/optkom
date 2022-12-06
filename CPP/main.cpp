@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
     int best_solution_size = G.get_size();
     std::vector<std::vector<int>> r;
     std::vector<std::vector<int>> sol;
-    for (int i = G.get_size() - 1; i >=k; i--)
+    for (int i = G.get_size() - 1; i >=k; i--) // start from k
     {
         std::cout << i << std::endl;
         r = tabu_search(G, i, propose_solution(G, i), 7, 50, 20000);
