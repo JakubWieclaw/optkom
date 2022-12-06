@@ -39,12 +39,9 @@ def tabu_search(graph, k, s, size_of_tabu_list=7, number_of_neighbours=10, max_n
         for _ in range(number_of_neighbours):
             neighbours.append(deepcopy(s))
 
-        # TODO: vertex should be drawn from those that are in conflict
         moves = [] # list of tuples (vertex, color)
         conflicts = []
         f_graph_s = f(graph, s, conflicts)
-        # print(f"len(conflicts): {len(conflicts)}")
-        # print(f"conflicts: {conflicts}")
         for neighbour in neighbours: # generate neighbours
             random_conflict = random.choice(conflicts)
             random_vertex = random.choice(list(random_conflict.vertice))
