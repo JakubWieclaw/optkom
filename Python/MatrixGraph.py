@@ -1,8 +1,10 @@
+import random
+
 class MatrixGraph():
     """
     ignoring n if filename is given
     """
-    def __init__(self, n, filename=None, vertices_from_zero_in_file=False, directed=False):
+    def __init__(self, n : int, filename : str =None, vertices_from_zero_in_file : bool =False, directed : bool =False):
         self.directed = directed
         self.edge_count = 0
         self.nodes_set = set()
@@ -37,7 +39,7 @@ class MatrixGraph():
     def nodes(self):
         return self.nodes_set
 
-    def add_edge(self, v, w, weight=1):
+    def add_edge(self, v : int, w : int, weight : int =1):
         if self.n_and_e[v][w] != 0:
             print (f"Edge already exists {v} {w}")
             # raise RuntimeError("Added already existing edge")  # Just in case
@@ -51,7 +53,7 @@ class MatrixGraph():
             self.n_and_e[w][v] = weight
             self.edge_count += 1
 
-    def successors(self, v):
+    def successors(self, v : int):
         s = []
         for i in range(len(self.n_and_e)):
             if self.n_and_e[v][i] != 0:
@@ -59,14 +61,14 @@ class MatrixGraph():
         return s
         # return [i for i, x in enumerate(self.n_and_e[v]) if x == 1]
 
-    def add_edges_from_list(self, l):
+    def add_edges_from_list(self, l : list):
         for item in l:
             self.add_edge(*item)
 
     def number_of_nodes(self):
         return len(self.nodes_set)
 
-    def get_weight(self, v, w):
+    def get_weight(self, v : int, w : int):
         return self.n_and_e[v][w]
 
     def get_node_with_min_degree(self):
@@ -79,12 +81,28 @@ class MatrixGraph():
                 min_degree_node = node
         return min_degree_node
 
-    def remove_node(self, node):
+    def remove_node(self, node : int):
         self.nodes_set.remove(node)
         for i in range(self.size):
             self.n_and_e[node][i] = 0
             self.n_and_e[i][node] = 0
         # self.size -= 1
 
-    def is_edge(self, v, w):
+    def is_edge(self, v : int, w : int):
         return self.n_and_e[v][w] == 1
+
+    def generate_random_graph(self, p : float):
+        for i in range(self.size):
+            for j in range(self.size):
+                if i != j:
+                    if random.random() < p:
+                        self.add_edge(i, j)
+
+    def save_to_file(self, filename : str):
+        with open(filename, "w") as f:
+            f.write(str(self.size))
+            f.write("\n")
+            for i in range(self.size):
+                for j in range(i+1, self.size):
+                    if self.n_and_e[i][j] == 1:
+                        f.write(f"{i} {j}\n")
