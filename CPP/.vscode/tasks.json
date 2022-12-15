@@ -6,7 +6,6 @@
 			"label": "C/C++: g++.exe build active file",
 			"command": "C:\\MinGW\\bin\\g++.exe",
 			"args": [
-				"-fdiagnostics-color=always",
 				"-g",
 				"${workspaceFolder}\\main.cpp",
 				"${workspaceFolder}\\tabu.cpp",
@@ -28,7 +27,6 @@
 			"label": "release",
 			"command": "C:\\MinGW\\bin\\g++.exe",
 			"args": [
-				"-fdiagnostics-color=always",
 				"-O3",
 				"${workspaceFolder}\\main.cpp",
 				"${workspaceFolder}\\tabu.cpp",

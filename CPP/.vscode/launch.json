@@ -19,12 +19,14 @@
             "cwd": "${workspaceFolder}",
             "setupCommands": [
                 {
-                    "description": "Włącz formatowanie kodu dla gdb",
+                    "description": "Enable pretty-printing for gdb",
                     "text": "-enable-pretty-printing",
                     "ignoreFailures": true
                 }
+
             ],
-            "preLaunchTask": "C/C++: g++.exe build active file"
+            "preLaunchTask": "C/C++: g++.exe build active file",
+            "args": ["gc1000.txt"]
           }
     ]
 }
