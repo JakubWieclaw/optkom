@@ -80,11 +80,24 @@ int main(int argc, char *argv[])
     // {
     //     k = std::atoi(argv[1]);
     // }
+   // printf("%d\n", argc);
     std::string file_path = "gc1000.txt";
+    int number_of_neighbours = 50;
+    int number_of_iterations = 500000;
     if (argc == 2)
     {
         file_path = argv[1];
+        //printf("%d\n", argc);
     }
+    else if (argc == 4)
+    {
+        file_path = argv[1];
+        number_of_neighbours = std::atoi(argv[2]);
+        number_of_iterations = std::atoi(argv[3]);
+        //printf("%d\n", argc);
+    }
+    
+   // printf("%d\n", argc);
     MatrixGraph G = MatrixGraph::get_graph_from_instance_file(file_path, false);
     G.print_graph_to_file();
 
@@ -101,7 +114,7 @@ int main(int argc, char *argv[])
             sol[i%(sol.size() - 1)].push_back(sol[sol.size() - 1][i]);
         }
         sol.pop_back();
-        r = tabu_search(G, greedy_count, sol, 7, 50, 1000000);
+        r = tabu_search(G, greedy_count, sol, 7, number_of_neighbours, number_of_iterations);
         if (!r.empty())
         {
             sol = r;
