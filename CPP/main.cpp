@@ -21,6 +21,19 @@ std::vector<std::vector<int>> propose_solution(MatrixGraph G, int k)
     return r;
 }
 
+void print_sol_to_file(std::vector<std::vector<int>> &sol, std::ofstream &f)
+{
+    for (int i = 0; i < sol.size(); i++)
+    {
+        f << i << ": ";
+        for (auto v : sol.at(i))
+        {
+            f << v << " ";
+        }
+        f << "\n";
+    }
+}
+
 std::vector<std::vector<int>> greedy_coloring(MatrixGraph &G)
 {
     auto g_size = G.get_size();
@@ -104,32 +117,6 @@ int main(int argc, char *argv[])
     MatrixGraph G = MatrixGraph::get_graph_from_instance_file(file_path, false);
     G.print_graph_to_file();
 
-    std::vector<std::vector<int>> r;
-    std::vector<std::vector<int>> sol = greedy_coloring(G);
-
-    //auto start = std::chrono::high_resolution_clock::now();
-    for(int greedy_count = sol.size()-1; greedy_count > 1; greedy_count--)
-    {
-        auto temp = sol;
-        auto min = std::min_element(temp.begin(), temp.end(), [](const auto &a, const auto &b){return a.size() < b.size();});
-        std::iter_swap(min, temp.end()-1);
-        for(int i = 0; i < temp[temp.size() - 1].size(); i++)
-        {
-            temp[i%(temp.size() - 1)].push_back(temp[temp.size() - 1][i]);
-        }
-        temp.pop_back();
-        r = tabu_search(G, greedy_count, temp, 7, number_of_neighbours, number_of_iterations);
-        if (!r.empty())
-        {
-            sol = r;
-            std::cout << greedy_count << std::endl;
-        }
-        else
-        {
-            break;
-        }
-    }
-
     std::string f_out;
     bool double_dot_found = false;
     for (int i = 0; i < file_path.length() - 1; i++)
@@ -156,16 +143,44 @@ int main(int argc, char *argv[])
     }
     f_out += "_out.txt";
     std::ofstream f(f_out);
-        for (int i = 0; i < sol.size(); i++)
+
+    std::vector<std::vector<int>> r;
+    std::vector<std::vector<int>> sol = greedy_coloring(G);
+
+        f.open(f_out);                  // Print greedy solution
+        print_sol_to_file(sol, f);
+        f.close();
+
+    //auto start = std::chrono::high_resolution_clock::now();
+    for(int greedy_count = sol.size()-1; greedy_count > 1; greedy_count--)
     {
-        f << i << ": ";
-        for (auto v : sol.at(i))
+        auto temp = sol;
+        auto min = std::min_element(temp.begin(), temp.end(), [](const auto &a, const auto &b){return a.size() < b.size();});
+        std::iter_swap(min, temp.end()-1);
+        for(int i = 0; i < temp[temp.size() - 1].size(); i++)
         {
-            f << v << " ";
+            temp[i%(temp.size() - 1)].push_back(temp[temp.size() - 1][i]);
         }
-        f << "\n";
+        temp.pop_back();
+        r = tabu_search(G, greedy_count, temp, 7, number_of_neighbours, number_of_iterations);
+        if (!r.empty())
+        {
+            sol = r;
+            f.open(f_out);
+            print_sol_to_file(sol, f);
+            f.close();
+            std::cout << greedy_count << std::endl;
+        }
+        else
+        {
+            break;
+        }
     }
-    f << "Best solution found for k = " << sol.size() << "\n";
+
+
+
+
+    //f << "Best solution found for k = " << sol.size() << "\n";
 
     // for (int i = 0; i < sol.size(); i++)
     // {
