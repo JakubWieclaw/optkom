@@ -12,7 +12,12 @@ MatrixGraph::MatrixGraph(unsigned int n) : v(n, vector<int>(n, 0)) {}
 void MatrixGraph::add_edge(unsigned int row, unsigned int col){
     assert(("Row == Col - you probably don't wanna do that", row != col));
     assert(("Row or Col out of bounds", row < v.size() && col < v.size()));
-    assert(("Edge already exists", !v[row][col]));
+    //assert(("Edge already exists", !v[row][col]));
+    if (v[row][col])
+    {
+        cout << "Edge already exists" << endl;
+        return;
+    }
 
     v[row][col] = 1;
     v[col][row] = 1;
