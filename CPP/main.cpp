@@ -4,6 +4,9 @@
 #include <cstdlib>
 #include <algorithm>
 #include <numeric>
+#include <fstream>
+#include <string>
+#include <iostream>
 std::vector<std::vector<int>> propose_solution(MatrixGraph G, int k)
 {
     std::vector<std::vector<int>> r(k);
@@ -126,16 +129,41 @@ int main(int argc, char *argv[])
         }
     }
 
-    for (int i = 0; i < sol.size(); i++)
+    std::string f_out;
+    for (char c:file_path)
     {
-        std::cout << i << ": ";
+        if (c != '.')
+        {
+            f_out += c;
+        }
+        else
+        {
+            break;
+        }
+    }
+    f_out += "_out.txt";
+    std::ofstream f(f_out);
+        for (int i = 0; i < sol.size(); i++)
+    {
+        f << i << ": ";
         for (auto v : sol.at(i))
         {
-            std::cout << v << " ";
+            f << v << " ";
         }
-        std::cout << std::endl;
+        f << "\n";
     }
-    std::cout << "Best solution found for k = " << sol.size() << std::endl;
+    f << "Best solution found for k = " << sol.size() << "\n";
+
+    // for (int i = 0; i < sol.size(); i++)
+    // {
+    //     std::cout << i << ": ";
+    //     for (auto v : sol.at(i))
+    //     {
+    //         std::cout << v << " ";
+    //     }
+    //     std::cout << std::endl;
+    // }
+    // std::cout << "Best solution found for k = " << sol.size() << std::endl;
 
     // }
     // else
