@@ -130,14 +130,26 @@ int main(int argc, char *argv[])
     }
 
     std::string f_out;
-    for (char c:file_path)
+    bool double_dot_found = false;
+    for (int i = 0; i < file_path.length() - 1; i++)
     {
-        if (c != '.')
+        if (file_path[i] != '.')
         {
-            f_out += c;
+            f_out += file_path[i];
+            double_dot_found = false;
+        }
+        else if (file_path[i+1] == '.')
+        {
+            f_out += file_path[i];
+            double_dot_found = true;
         }
         else
         {
+            if (double_dot_found)
+            {
+                f_out += file_path[i];
+                continue;
+            }
             break;
         }
     }
