@@ -44,7 +44,7 @@ unsigned int MatrixGraph::get_size(){
 
 MatrixGraph MatrixGraph::get_graph_from_instance_file(const string &file_name, bool indexed_from_zero){
     ifstream file(file_name);
-    assert("File not found",file.is_open());
+    assert(("File not found",file.is_open()));
     int size;
     file >> size;
     MatrixGraph g(size);
