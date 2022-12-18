@@ -110,14 +110,15 @@ int main(int argc, char *argv[])
     //auto start = std::chrono::high_resolution_clock::now();
     for(int greedy_count = sol.size()-1; greedy_count > 1; greedy_count--)
     {
-        auto min = std::min_element(sol.begin(), sol.end(), [](const auto &a, const auto &b){return a.size() < b.size();});
-        std::iter_swap(min, sol.end()-1);
-        for(int i = 0; i < sol[sol.size() - 1].size(); i++)
+        auto temp = sol;
+        auto min = std::min_element(temp.begin(), temp.end(), [](const auto &a, const auto &b){return a.size() < b.size();});
+        std::iter_swap(min, temp.end()-1);
+        for(int i = 0; i < temp[temp.size() - 1].size(); i++)
         {
-            sol[i%(sol.size() - 1)].push_back(sol[sol.size() - 1][i]);
+            temp[i%(temp.size() - 1)].push_back(temp[temp.size() - 1][i]);
         }
-        sol.pop_back();
-        r = tabu_search(G, greedy_count, sol, 7, number_of_neighbours, number_of_iterations);
+        temp.pop_back();
+        r = tabu_search(G, greedy_count, temp, 7, number_of_neighbours, number_of_iterations);
         if (!r.empty())
         {
             sol = r;
