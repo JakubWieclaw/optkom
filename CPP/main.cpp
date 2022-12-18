@@ -21,7 +21,7 @@ std::vector<std::vector<int>> propose_solution(MatrixGraph G, int k)
     return r;
 }
 
-void print_sol_to_file(std::vector<std::vector<int>> &sol, std::ofstream &f)
+void print_sol_to_file(std::vector<std::vector<int>> &sol, std::ostream &f)
 {
     for (int i = 0; i < sol.size(); i++)
     {
@@ -147,9 +147,9 @@ int main(int argc, char *argv[])
     std::vector<std::vector<int>> r;
     std::vector<std::vector<int>> sol = greedy_coloring(G);
 
-        f.open(f_out);                  // Print greedy solution
-        print_sol_to_file(sol, f);
-        f.close();
+    //f.open(f_out);                  // Print greedy solution
+    print_sol_to_file(sol, f);
+    f.close();
 
     //auto start = std::chrono::high_resolution_clock::now();
     for(int greedy_count = sol.size()-1; greedy_count > 1; greedy_count--)
