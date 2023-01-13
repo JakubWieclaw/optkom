@@ -1,0 +1,11 @@
+nazwa     optymalne     nasze
+queen7_7  7              7
+queen8_8  9              9
+myciel5   6              6
+myciel6   7              7
+anna      11             11
+david     11             11
+huck      11             11
+games120  9              9
+queen11_11  11           12
+queen13_13  13           14
