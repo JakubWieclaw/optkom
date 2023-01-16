@@ -15,7 +15,7 @@
               "trace": true
             },
             "MIMode": "gdb",
-            "miDebuggerPath": "C:\\MinGW\\bin\\gdb.exe",
+            "miDebuggerPath": "C:\\msys64\\mingw64\\bin\\gdb.exe",
             "cwd": "${workspaceFolder}",
             "setupCommands": [
                 {
@@ -26,7 +26,7 @@
 
             ],
             "preLaunchTask": "C/C++: g++.exe build active file",
-            "args": ["gc1000.txt"]
+            "args": ["../instances/queen6_6.txt", "60", "20000"]
           }
     ]
 }

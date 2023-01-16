@@ -115,7 +115,7 @@ int main(int argc, char *argv[])
     
    // printf("%d\n", argc);
     MatrixGraph G = MatrixGraph::get_graph_from_instance_file(file_path, false);
-    G.print_graph_to_file();
+    //G.print_graph_to_file();
 
     std::string f_out;
     bool double_dot_found = false;
